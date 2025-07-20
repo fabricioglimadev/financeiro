@@ -6,6 +6,9 @@ import br.dev.fabricioglima.financeiro.service.CaixaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/caixa")
 public class CaixaController {
@@ -73,6 +76,29 @@ public class CaixaController {
     } catch (Exception e){
       return ResponseEntity.internalServerError().build();
     }
+
+  }
+
+  @GetMapping("/filtro-por-datas")
+  public ResponseEntity<?> findByDataLancamentoBetween(
+          @RequestParam(required = true) LocalDate dataInicial,
+          @RequestParam(required = true) LocalDate dataFinal){
+
+    List<CaixaResponseDto> response = service.findByDataLancamentoBetween(dataInicial, dataFinal);
+
+    return ResponseEntity.ok(response);
+
+  }
+
+  @GetMapping("/filtro-por-tipo-e-datas")
+  public ResponseEntity<?> findByTipoLancamentoAndDataLancamentoBetween(
+          @RequestParam(required = true) String tipoLancamento,
+          @RequestParam(required = true) LocalDate dataInicial,
+          @RequestParam(required = true) LocalDate dataFinal){
+
+    List<CaixaResponseDto> response = service.findByTipoLancamentoAndDataLancamentoBetween(tipoLancamento, dataInicial, dataFinal);
+
+    return ResponseEntity.ok(response);
 
   }
 
