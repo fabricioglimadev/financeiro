@@ -1,5 +1,6 @@
 package br.dev.fabricioglima.financeiro.service;
 
+import br.dev.fabricioglima.financeiro.enums.TipoLancamento;
 import br.dev.fabricioglima.financeiro.repository.CaixaRepository;
 import br.dev.fabricioglima.financeiro.dtos.CaixaRequestDto;
 import br.dev.fabricioglima.financeiro.dtos.CaixaResponseDto;
@@ -25,7 +26,12 @@ public class CaixaService {
   public CaixaResponseDto insert(CaixaRequestDto request) {
 
     CaixaEntity caixaEntity = new CaixaEntity();
-    caixaEntity.setTipoLancamento(request.getTipoLancamento());
+
+    caixaEntity.setTipoLancamento("S");
+    if(request.getTipoLancamento() == TipoLancamento.ENTRADA){
+      caixaEntity.setTipoLancamento("E");
+    }
+
     caixaEntity.setDataLancamento(LocalDate.now());
     if (request.getDataLancamento() != null) {
       caixaEntity.setDataLancamento(request.getDataLancamento());
@@ -36,7 +42,9 @@ public class CaixaService {
     caixaEntity = repository.save(caixaEntity);
 
     CaixaResponseDto response = new CaixaResponseDto();
-    response.setTipoLancamento(caixaEntity.getTipoLancamento());
+
+    response.setTipoLancamento(TipoLancamento.valueOf(caixaEntity.getTipoLancamento().equals("E") ? "ENTRADA" : "SAIDA"));
+
     response.setDataLancamento(caixaEntity.getDataLancamento());
     response.setDescricao(caixaEntity.getDescricao());
     response.setValor(caixaEntity.getValor());
@@ -54,7 +62,15 @@ public class CaixaService {
     }
 
     CaixaEntity caixaEntity = caixaOptional.get();
-    caixaEntity.setTipoLancamento(request.getTipoLancamento());
+
+
+    caixaEntity.setTipoLancamento("S");
+    if(request.getTipoLancamento() == TipoLancamento.ENTRADA){
+      caixaEntity.setTipoLancamento("E");
+    }
+
+
+
     caixaEntity.setDataLancamento(LocalDate.now());
     if (request.getDataLancamento() != null) {
       caixaEntity.setDataLancamento(request.getDataLancamento());
@@ -65,7 +81,7 @@ public class CaixaService {
     caixaEntity = repository.save(caixaEntity);
 
     CaixaResponseDto response = new CaixaResponseDto();
-    response.setTipoLancamento(caixaEntity.getTipoLancamento());
+    response.setTipoLancamento(TipoLancamento.valueOf(caixaEntity.getTipoLancamento().equals("E") ? "ENTRADA" : "SAIDA"));
     response.setDataLancamento(caixaEntity.getDataLancamento());
     response.setDescricao(caixaEntity.getDescricao());
     response.setValor(caixaEntity.getValor());
@@ -94,7 +110,9 @@ public class CaixaService {
     CaixaEntity caixaEntity = caixaOptional.get();
 
     CaixaResponseDto response = new CaixaResponseDto();
-    response.setTipoLancamento(caixaEntity.getTipoLancamento());
+
+    response.setTipoLancamento(TipoLancamento.valueOf(caixaEntity.getTipoLancamento().equals("E") ? "ENTRADA" : "SAIDA"));
+
     response.setDataLancamento(caixaEntity.getDataLancamento());
     response.setDescricao(caixaEntity.getDescricao());
     response.setValor(caixaEntity.getValor());
@@ -113,7 +131,7 @@ public class CaixaService {
     entities.forEach(e -> {
       CaixaResponseDto response = new CaixaResponseDto();
       response.setId(e.getId());
-      response.setTipoLancamento(e.getTipoLancamento());
+      response.setTipoLancamento(TipoLancamento.valueOf(e.getTipoLancamento().equals("E") ? "ENTRADA" : "SAIDA"));
       response.setDataLancamento(e.getDataLancamento());
       response.setDescricao(e.getDescricao());
       response.setValor(e.getValor());
@@ -133,7 +151,7 @@ public class CaixaService {
     entities.forEach(e -> {
       CaixaResponseDto response = new CaixaResponseDto();
       response.setId(e.getId());
-      response.setTipoLancamento(e.getTipoLancamento());
+      response.setTipoLancamento(TipoLancamento.valueOf(e.getTipoLancamento().equals("E") ? "ENTRADA" : "SAIDA"));
       response.setDataLancamento(e.getDataLancamento());
       response.setDescricao(e.getDescricao());
       response.setValor(e.getValor());

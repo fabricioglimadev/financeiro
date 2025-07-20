@@ -1,12 +1,14 @@
 package br.dev.fabricioglima.financeiro.dtos;
 
+import br.dev.fabricioglima.financeiro.enums.TipoLancamento;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CaixaResponseDto {
 
   private Long id;
-  private String tipoLancamento;
+  private TipoLancamento tipoLancamento;
   private LocalDate dataLancamento;
   private String descricao;
   private BigDecimal valor;
@@ -20,11 +22,12 @@ public class CaixaResponseDto {
     this.id = id;
   }
 
-  public String getTipoLancamento() {
+
+  public TipoLancamento getTipoLancamento() {
     return tipoLancamento;
   }
 
-  public void setTipoLancamento(String tipoLancamento) {
+  public void setTipoLancamento(TipoLancamento tipoLancamento) {
     this.tipoLancamento = tipoLancamento;
   }
 
