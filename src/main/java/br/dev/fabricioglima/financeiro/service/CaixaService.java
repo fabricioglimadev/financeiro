@@ -82,5 +82,27 @@ public class CaixaService {
     repository.deleteById(id);
   }
 
+  public CaixaResponseDto findById(Long id) {
+
+    Optional<CaixaEntity> caixaOptional = repository.findById(id);
+    if (caixaOptional.isEmpty()) {
+      throw new RuntimeException("Lançamento não encontrado");
+    }
+
+    CaixaEntity caixaEntity = caixaOptional.get();
+
+    CaixaResponseDto response = new CaixaResponseDto();
+    response.setTipoLancamento(caixaEntity.getTipoLancamento());
+    response.setDataLancamento(caixaEntity.getDataLancamento());
+    response.setDescricao(caixaEntity.getDescricao());
+    response.setValor(caixaEntity.getValor());
+    response.setId(caixaEntity.getId());
+
+    return response;
+
+  }
+
+
+
 
 }
