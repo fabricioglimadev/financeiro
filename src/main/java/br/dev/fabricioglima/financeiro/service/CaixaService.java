@@ -5,6 +5,7 @@ import br.dev.fabricioglima.financeiro.dtos.CaixaRequestDto;
 import br.dev.fabricioglima.financeiro.dtos.CaixaResponseDto;
 import br.dev.fabricioglima.financeiro.entity.CaixaEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class CaixaService {
     this.repository = repository;
   }
 
-
+  @Transactional
   public CaixaResponseDto insert(CaixaRequestDto request) {
 
     CaixaEntity caixaEntity = new CaixaEntity();
@@ -42,10 +43,11 @@ public class CaixaService {
     return response;
   }
 
+  @Transactional
   public CaixaResponseDto update(Long id, CaixaRequestDto request) {
 
     Optional<CaixaEntity> caixaOptional = repository.findById(id);
-    if(caixaOptional.isEmpty()){
+    if (caixaOptional.isEmpty()) {
       throw new RuntimeException("Lançamento não encontrado");
     }
 
@@ -68,6 +70,16 @@ public class CaixaService {
     response.setId(caixaEntity.getId());
 
     return response;
+  }
+
+  @Transactional
+  public void delete(Long id) {
+    Optional<CaixaEntity> caixaOptional = repository.findById(id);
+    if (caixaOptional.isEmpty()) {
+      throw new RuntimeException("Lançamento não encontrado");
+    }
+
+    repository.deleteById(id);
   }
 
 
