@@ -1,6 +1,6 @@
 package br.dev.fabricioglima.financeiro.service;
 
-import br.dev.fabricioglima.financeiro.CaixaRepository;
+import br.dev.fabricioglima.financeiro.repository.CaixaRepository;
 import br.dev.fabricioglima.financeiro.dtos.CaixaRequestDto;
 import br.dev.fabricioglima.financeiro.dtos.CaixaResponseDto;
 import br.dev.fabricioglima.financeiro.entity.CaixaEntity;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -102,7 +104,45 @@ public class CaixaService {
 
   }
 
+  public List<CaixaResponseDto> findByDataLancamentoBetween(LocalDate dataInicial, LocalDate dataFinal){
 
+    List<CaixaResponseDto> list = new ArrayList<>();
+
+    List<CaixaEntity> entities = repository.findByDataLancamentoBetween(dataInicial, dataFinal);
+
+    entities.forEach(e -> {
+      CaixaResponseDto response = new CaixaResponseDto();
+      response.setId(e.getId());
+      response.setTipoLancamento(e.getTipoLancamento());
+      response.setDataLancamento(e.getDataLancamento());
+      response.setDescricao(e.getDescricao());
+      response.setValor(e.getValor());
+      list.add(response);
+    });
+
+    return list;
+
+  }
+
+  public List<CaixaResponseDto> findByTipoLancamentoAndDataLancamentoBetween(String tipoLancamento, LocalDate dataInicial, LocalDate dataFinal){
+
+    List<CaixaResponseDto> list = new ArrayList<>();
+
+    List<CaixaEntity> entities = repository.findByTipoLancamentoAndDataLancamentoBetween(tipoLancamento, dataInicial, dataFinal);
+
+    entities.forEach(e -> {
+      CaixaResponseDto response = new CaixaResponseDto();
+      response.setId(e.getId());
+      response.setTipoLancamento(e.getTipoLancamento());
+      response.setDataLancamento(e.getDataLancamento());
+      response.setDescricao(e.getDescricao());
+      response.setValor(e.getValor());
+      list.add(response);
+    });
+
+    return list;
+
+  }
 
 
 }
