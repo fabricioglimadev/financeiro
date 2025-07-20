@@ -6,6 +6,7 @@ import br.dev.fabricioglima.financeiro.service.CaixaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -101,6 +102,29 @@ public class CaixaController {
     return ResponseEntity.ok(response);
 
   }
+
+  @GetMapping("/soma-das-entradas-por-datas")
+  public ResponseEntity<?> sumByEntradasAndDataLancamentoBetween(
+          @RequestParam(required = true) LocalDate dataInicial,
+          @RequestParam(required = true) LocalDate dataFinal){
+
+    BigDecimal response = service.somaDasEntradas(dataInicial, dataFinal);
+
+    return ResponseEntity.ok(response);
+
+  }
+
+  @GetMapping("/soma-das-saidas-por-datas")
+  public ResponseEntity<?> sumBySaidasAndDataLancamentoBetween(
+          @RequestParam(required = true) LocalDate dataInicial,
+          @RequestParam(required = true) LocalDate dataFinal){
+
+    BigDecimal response = service.somaDasSaidas(dataInicial, dataFinal);
+
+    return ResponseEntity.ok(response);
+
+  }
+
 
 
 }

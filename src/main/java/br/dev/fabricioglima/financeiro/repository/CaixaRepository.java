@@ -18,6 +18,6 @@ public interface CaixaRepository extends JpaRepository<CaixaEntity, Long> {
   List<CaixaEntity> findByTipoLancamentoAndDataLancamentoBetween(String tipo, LocalDate inicio, LocalDate fim);
 
   @Query("SELECT SUM(c.valor) FROM CaixaEntity c WHERE c.tipoLancamento = :tipo AND c.dataLancamento BETWEEN :inicio AND :fim")
-  BigDecimal somarEntradasPorPeriodo(@Param("tipo") String tipo, @Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim);
+  BigDecimal somarPorTipoPorPeriodo(@Param("tipo") String tipo, @Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim);
 
 }

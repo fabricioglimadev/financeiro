@@ -8,6 +8,7 @@ import br.dev.fabricioglima.financeiro.entity.CaixaEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +162,24 @@ public class CaixaService {
     return list;
 
   }
+
+  public BigDecimal somaDasEntradas(LocalDate dataInicial, LocalDate dataFinal){
+    BigDecimal response = repository.somarPorTipoPorPeriodo("E", dataInicial, dataFinal);
+    if(response == null){
+      return BigDecimal.ZERO;
+    }
+    return response;
+  }
+
+  public BigDecimal somaDasSaidas(LocalDate dataInicial, LocalDate dataFinal){
+    BigDecimal response = repository.somarPorTipoPorPeriodo("S", dataInicial, dataFinal);
+    if(response == null){
+      return BigDecimal.ZERO;
+    }
+    return response;
+  }
+
+
 
 
 }
