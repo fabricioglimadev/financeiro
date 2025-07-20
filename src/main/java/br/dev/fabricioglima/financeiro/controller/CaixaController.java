@@ -53,7 +53,7 @@ public class CaixaController {
 
     try{
       service.delete(id);
-      return ResponseEntity.noContent();
+      return ResponseEntity.noContent().build();
     } catch (RuntimeException e){
       return ResponseEntity.notFound().build();
     } catch (Exception e){
@@ -75,9 +75,6 @@ public class CaixaController {
     }
 
   }
-
-
-
 
 
 }
