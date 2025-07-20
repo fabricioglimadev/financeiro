@@ -34,6 +34,50 @@ public class CaixaController {
 
   }
 
+  @PutMapping("/{id}")
+  public ResponseEntity<?> insert(@PathVariable Long id, @RequestBody CaixaRequestDto request){
+
+    try{
+      CaixaResponseDto response = service.update(id, request);
+      return ResponseEntity.ok(response);
+    } catch (RuntimeException e){
+      return ResponseEntity.notFound().build();
+    } catch (Exception e){
+      return ResponseEntity.internalServerError().build();
+    }
+
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> insert(@PathVariable Long id){
+
+    try{
+      service.delete(id);
+      return ResponseEntity.noContent();
+    } catch (RuntimeException e){
+      return ResponseEntity.notFound().build();
+    } catch (Exception e){
+      return ResponseEntity.internalServerError().build();
+    }
+
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<?> findById(@PathVariable Long id){
+
+    try{
+      CaixaResponseDto response = service.findById(id);
+      return ResponseEntity.ok(response);
+    } catch (RuntimeException e){
+      return ResponseEntity.notFound().build();
+    } catch (Exception e){
+      return ResponseEntity.internalServerError().build();
+    }
+
+  }
+
+
+
 
 
 }
