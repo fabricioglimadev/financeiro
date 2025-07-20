@@ -125,6 +125,16 @@ public class CaixaController {
 
   }
 
+  @GetMapping("/saldo-por-datas")
+  public ResponseEntity<?> getSaldo(
+          @RequestParam(required = true) LocalDate dataInicial,
+          @RequestParam(required = true) LocalDate dataFinal){
+
+    BigDecimal response = service.subtrairEntradasPelasSaidas(dataInicial, dataFinal);
+
+    return ResponseEntity.ok(response);
+
+  }
 
 
 }

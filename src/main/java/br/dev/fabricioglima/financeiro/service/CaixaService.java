@@ -179,6 +179,16 @@ public class CaixaService {
     return response;
   }
 
+  public BigDecimal subtrairEntradasPelasSaidas(LocalDate dataInicial, LocalDate dataFinal){
+    BigDecimal entradas = somaDasEntradas(dataInicial, dataFinal);
+    BigDecimal saidas = somaDasSaidas( dataInicial, dataFinal);
+
+    return entradas.subtract(saidas);
+
+  }
+
+
+
 
 
 
