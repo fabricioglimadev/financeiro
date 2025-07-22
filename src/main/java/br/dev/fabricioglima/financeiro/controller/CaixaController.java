@@ -5,8 +5,10 @@ import br.dev.fabricioglima.financeiro.dtos.CaixaResponseDto;
 import br.dev.fabricioglima.financeiro.service.CaixaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +33,13 @@ public class CaixaController {
 
     try{
       CaixaResponseDto response = service.insert(request);
-      return ResponseEntity.ok(response);
+
+      URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+              .path("/{id}")
+              .buildAndExpand(response.getId())
+              .toUri();
+
+      return ResponseEntity.created(location).body(response);
     } catch (Exception e){
       return ResponseEntity.internalServerError().build();
     }
